@@ -60,7 +60,7 @@ int compDatos(char *Argumentos) // aqui verificamos si los argumentos estan bien
              if(cont==2)
              {
                  cont=-1;
-                 if(num[0]>-1 && num[0]<9 && num[1]>-1 && num[1]<9 && num[2]>0 && num[2]<10)
+                 if(num[0]>-1 && num[0]<3 && num[1]>-1 && num[1]<3 && num[2]>0 && num[2]<10)
                  {
 
                  }
