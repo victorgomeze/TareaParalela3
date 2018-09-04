@@ -6,14 +6,12 @@
 
 using namespace std;
 
-void Inicializacion(int tablero[][3], int vector[]) // funcion para llenar de ceros
+void Inicializacion(int tablero[][9]) // funcion para llenar de ceros
 {
-   for(int i=0;i<3;i++){ // inicializacion vector usados
-                vector[i]=0;
-    }
-    for(int i=0;i<3;i++) // inicializacion tablero, llenado de ceros
+   
+    for(int i=0;i<9;i++) // inicializacion tablero, llenado de ceros
     {
-        for(int j=0;j<3;j++)
+        for(int j=0;j<9;j++)
         {
             tablero[i][j]=0;
         }
@@ -60,7 +58,7 @@ int compDatos(char *Argumentos) // aqui verificamos si los argumentos estan bien
              if(cont==2)
              {
                  cont=-1;
-                 if(num[0]>-1 && num[0]<3 && num[1]>-1 && num[1]<3 && num[2]>0 && num[2]<10)
+                 if(num[0]>-1 && num[0]<9 && num[1]>-1 && num[1]<9 && num[2]>0 && num[2]<10)
                  {
 
                  }
@@ -88,13 +86,29 @@ bool NoExiste(int vector[],int n){
 
     
 }
-
-void mostrar(int tablero[][3])
+void llenadoRestantes(int tablero[][9]){
+	for(int i=0;i<9;i++){
+		for(int j=0;j<9;j++){
+			if(tablero[i][j]== 0){
+				tablero[i][j]=(rand() % 9) + 1;
+			}
+		}
+	}
+}
+void mostrar(int tablero[][9])
 {
-    for(int i=0;i<3;i++)
+    for(int i=0;i<9;i++)
     {
-        for(int j=0;j<3;j++)
+        if(i%3==0)
         {
+            cout<<"--------------------"<<endl;
+        }
+        for(int j=0;j<9;j++)
+        {
+            if(j%3==0)
+            {
+                cout<<"|";
+            }
             cout<<tablero[i][j]<<" ";
 
         }
@@ -103,10 +117,10 @@ void mostrar(int tablero[][3])
 }
 
 
+
 int main(int argc, char* argv[])
 {
-
-    int  matriz[3][3];
+    int  matriz[9][9];
     if(argc<2) // en caso de no ingresar argumentos
     {
         cout<<"Ingresa los datos"<<endl;
@@ -115,10 +129,10 @@ int main(int argc, char* argv[])
     {
         if(compDatos(argv[1])==1) // comprobamos que el argumento esten bien ingresados
         {
-            int arg, num[3],usados[9],contUsa=0,x=1,cont=-1; // variables necesarias
+            int arg, num[3],cont=-1; // variables necesarias
             string cadena=argv[1];
             char s;
-            Inicializacion(matriz, usados); // inicializamos el vector y matriz
+            Inicializacion(matriz); // inicializamos el vector y matriz
               
     
             for(int i=0;i<cadena.length();i++) // guardado de numeros ingresados por usuario
@@ -133,28 +147,13 @@ int main(int argc, char* argv[])
                 {
                     matriz[num[0]][num[1]]=num[2]; // agregamos el valor a la matriz
                     cont=-1;
-                    usados[contUsa]=num[2]; // lo guardamos para no volver a usarlo
-                    contUsa++;
+                    
                     
                 }
      
             }
             
-            for(int i=0; i<3;i++){ // proceso de llenado de los numeros faltantes
-                for(int j=0;j<3;j++){
-                    
-                    if(matriz[i][j]==0){
-                        if(NoExiste(usados,x)==true){
-                            matriz[i][j]=x;                            
-                            usados[contUsa++]=x;
-                            i=0;
-                            j=0; // las volvemos a dejar en cero para iniciar desde el principio la busqueda
-                        }		  // para no repetir numeros
-                        x++;
-                        
-                    }
-                }
-            }
+            llenadoRestantes(matriz);
 
             mostrar(matriz); 
 
